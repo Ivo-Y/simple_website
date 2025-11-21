@@ -3,31 +3,174 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Simple Website</title>
+  <title>My Math + Notes Site</title>
+
+  <!-- Open Sans font -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <style>
+    /* Base layout */
     body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 0 20px;
+      margin: 0;
+      font-family: "Open Sans", sans-serif;
+      display: flex;
+      background: var(--bg);
+      color: var(--text);
+      transition: 0.3s;
+    }
+
+    :root {
+      --bg: #fafafa;
+      --text: #222;
+      --sidebar-bg: #f0f0f0;
+      --link: #0066cc;
+      --code-bg: #e8e8e8;
+    }
+
+    body.dark {
+      --bg: #141414;
+      --text: #e7e7e7;
+      --sidebar-bg: #1f1f1f;
+      --link: #79b8ff;
+      --code-bg: #222;
+    }
+
+    /* Sidebar */
+    nav {
+      width: 220px;
+      background: var(--sidebar-bg);
+      height: 100vh;
+      padding: 20px;
+      position: fixed;
+      overflow-y: auto;
+      border-right: 1px solid rgba(0,0,0,0.1);
+    }
+
+    nav h2 {
+      font-size: 1.2em;
+      margin-top: 0;
+    }
+
+    nav a {
+      display: block;
+      padding: 6px 0;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Main content */
+    main {
+      margin-left: 240px;
+      padding: 40px;
+      max-width: 800px;
+    }
+
+    h1, h2, h3 {
+      margin-top: 30px;
+      font-weight: 700;
+    }
+
+    p {
       line-height: 1.6;
     }
-    h1 {
-      text-align: center;
-      color: #333;
+
+    a {
+      color: var(--link);
     }
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      color: #777;
+
+    /* Markdown-style code blocks */
+    pre {
+      background: var(--code-bg);
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: monospace;
+    }
+
+    /* Toggle button */
+    .toggle {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      cursor: pointer;
+      padding: 8px 12px;
+      background: var(--code-bg);
+      border-radius: 6px;
+      user-select: none;
       font-size: 0.9em;
     }
   </style>
 </head>
-<body>
-  <h1>Hello, world!</h1>
-  <p>Welcome to my very simple one-page website. You can edit this text to say whatever you want.</p>
 
-  <footer>Made with ❤️ and GitHub Pages</footer>
+<body>
+  <!-- Sidebar -->
+  <nav>
+    <h2>Contents</h2>
+    <a href="#intro">Introduction</a>
+    <a href="#math">Math Examples</a>
+    <a href="#markdown">Markdown Examples</a>
+  </nav>
+
+  <!-- Dark mode toggle -->
+  <div class="toggle" onclick="toggleDark()">🌙 / ☀️</div>
+
+  <!-- Main Content -->
+  <main>
+    <h1 id="intro">My Math & Notes Page</h1>
+    <p>
+      This is a clean one-page site with a sidebar, dark mode, MathJax, and
+      Markdown-style formatting.
+    </p>
+
+    <h2 id="math">Math Examples</h2>
+    <p>Inline math: $a^2 + b^2 = c^2$.</p>
+
+    <p>Display math:</p>
+    $$ \int_0^\infty e^{-x^2}\, dx = \frac{\sqrt{\pi}}{2} $$
+
+    <h2 id="markdown">Markdown-Style Examples</h2>
+
+    <h3>Code Block</h3>
+    <pre><code>def hello():
+    print("Hello, world!")
+</code></pre>
+
+    <h3>List</h3>
+    <ul>
+      <li>Clean layout</li>
+      <li>Sidebar navigation</li>
+      <li>Dark mode</li>
+      <li>MathJax</li>
+      <li>Markdown-ish styles</li>
+    </ul>
+  </main>
+
+  <script>
+    // Dark mode toggle
+    function toggleDark() {
+      document.body.classList.toggle("dark");
+      localStorage.setItem("dark", document.body.classList.contains("dark"));
+    }
+
+    // Remember preference
+    if (localStorage.getItem("dark") === "true") {
+      document.body.classList.add("dark");
+    }
+  </script>
 </body>
 </html>
