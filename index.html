@@ -1,192 +1,68 @@
+# File: index.html
+<!-- Main HTML referencing external markdown sections -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Math + Notes Site</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <script>
-    MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] } };
-  </script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: "Open Sans", sans-serif;
-      display: flex;
-      background: var(--bg);
-      color: var(--text);
-      transition: 0.3s;
-    }
-
-    :root {
-      --bg: #fafafa;
-      --text: #222;
-      --sidebar-bg: #f0f0f0;
-      --link: #0066cc;
-      --code-bg: #e8e8e8;
-    }
-
-    body.dark {
-      --bg: #141414;
-      --text: #e7e7e7;
-      --sidebar-bg: #1f1f1f;
-      --link: #79b8ff;
-      --code-bg: #222;
-    }
-
-    nav {
-      width: 220px;
-      background: var(--sidebar-bg);
-      height: 100vh;
-      padding: 20px;
-      position: fixed;
-      overflow-y: auto;
-      border-right: 1px solid rgba(0,0,0,0.1);
-    }
-
-    nav h2 { margin-top: 0; font-size: 1.2em; }
-    nav a {
-      display: block;
-      padding: 6px 0;
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    main {
-      margin-left: 240px;
-      padding: 40px;
-      max-width: 800px;
-    }
-
-    h1, h2, h3 { margin-top: 30px; font-weight: 700; }
-    p { line-height: 1.6; }
-
-    pre {
-      background: var(--code-bg);
-      padding: 12px;
-      border-radius: 6px;
-      overflow-x: auto;
-    }
-
-    .toggle {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      cursor: pointer;
-      padding: 8px 12px;
-      background: var(--code-bg);
-      border-radius: 6px;
-      user-select: none;
-      font-size: 0.9em;
-    }
-
-    /* MOBILE RESPONSIVE DESIGN */
-    @media (max-width: 800px) {
-      body {
-        flex-direction: column;
-      }
-
-      nav {
-        position: relative;
-        width: 100%;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid rgba(0,0,0,0.1);
-      }
-
-      main {
-        margin-left: 0;
-        padding: 20px;
-      }
-
-      .toggle {
-        top: 15px;
-        right: 15px;
-      }
-    }
-
-    /* Collapsible menu for very small screens */
-    @media (max-width: 500px) {
-      nav {
-        display: none;
-      }
-
-      .menu-btn {
-        display: block;
-        position: absolute;
-        left: 10px;
-        top: 10px;
-        padding: 8px 12px;
-        background: var(--code-bg);
-        border-radius: 6px;
-        cursor: pointer;
-      }
-
-      nav.open {
-        display: block;
-        background: var(--sidebar-bg);
-        padding: 20px;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Math + Notes Site</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script>
+async function loadSection(id, file) {
+const resp = await fetch(file);
+const text = await resp.text();
+document.getElementById(id).innerHTML = marked.parse(text);
+MathJax.typesetPromise();
+}
+document.addEventListener("DOMContentLoaded", () => {
+loadSection("intro", "intro.md");
+loadSection("math", "math.md");
+loadSection("markdown", "markdown.md");
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body {
+margin: 0;
+font-family: "Open Sans", sans-serif;
+display: flex;
+background: var(--bg);
+color: var(--text);
+transition: 0.3s;
+}
+:root { --bg:#fafafa; --text:#222; --sidebar-bg:#f0f0f0; --link:#0066cc; --code-bg:#e8e8e8; }
+body.dark { --bg:#141414; --text:#e7e7e7; --sidebar-bg:#1f1f1f; --link:#79b8ff; --code-bg:#222; }
+nav { width:220px; background:var(--sidebar-bg); height:100vh; padding:20px; position:fixed; overflow-y:auto; border-right:1px solid rgba(0,0,0,0.1); }
+nav h2 { margin-top:0; font-size:1.2em; }
+nav a { display:block; padding:6px 0; color:var(--text); text-decoration:none; font-weight:600; }
+main { margin-left:240px; padding:40px; max-width:800px; }
+pre { background:var(--code-bg); padding:12px; border-radius:6px; overflow-x:auto; }
+.toggle { position:absolute; right:10px; top:10px; cursor:pointer; padding:8px 12px; background:var(--code-bg); border-radius:6px; }
+@media(max-width:800px){ body{flex-direction:column;} nav{position:relative;width:100%;height:auto;border-bottom:1px solid rgba(0,0,0,0.1);} main{margin-left:0;padding:20px;} }
+@media(max-width:500px){ nav{display:none;} .menu-btn{display:block;position:absolute;left:10px;top:10px;padding:8px 12px;background:var(--code-bg);border-radius:6px;cursor:pointer;} nav.open{display:block;padding:20px;} }
+</style>
 </head>
-
 <body>
-  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+<nav>
+<h2>Contents</h2>
+<a href="#intro">Introduction</a>
+<a href="#math">Math Examples</a>
+<a href="#markdown">Markdown Examples</a>
+</nav>
 
-  <nav id="sidebar">
-    <h2>Contents</h2>
-    <a href="#intro">Introduction</a>
-    <a href="#math">Math Examples</a>
-    <a href="#markdown">Markdown Examples</a>
-  </nav>
 
-  <div class="toggle" onclick="toggleDark()">🌙 / ☀️</div>
-
-  <main>
-    <h1 id="intro">My Math & Notes Page</h1>
-    <p>This is a clean one-page site with a sidebar, dark mode, MathJax, and Markdown-style formatting.</p>
-
-    <h2 id="math">Math Examples</h2>
-    <p>Inline math: $a^2 + b^2 = c^2$.</p>
-    <p>Display math:</p>
-    $$ \int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2} $$
-
-    <h2 id="markdown">Markdown-Style Examples</h2>
-
-    <h3>Code Block</h3>
-    <pre><code>def hello():
-    print("Hello, world!")</code></pre>
-
-    <h3>List</h3>
-    <ul>
-      <li>Clean layout</li>
-      <li>Sidebar navigation</li>
-      <li>Dark mode</li>
-      <li>MathJax</li>
-      <li>Markdown-ish styles</li>
-    </ul>
-  </main>
-
-  <script>
-    function toggleDark() {
-      document.body.classList.toggle("dark");
-      localStorage.setItem("dark", document.body.classList.contains("dark"));
-    }
-
-    if (localStorage.getItem("dark") === "true") {
-      document.body.classList.add("dark");
-    }
-
-    function toggleMenu() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('open');
-    }
-  </script>
+<main>
+<section id="intro"></section>
+<section id="math"></section>
+<section id="markdown"></section>
+</main>
+<div class="toggle" onclick="toggleDark()">🌙 / ☀️</div>
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+<script>
+function toggleDark(){ document.body.classList.toggle("dark"); localStorage.setItem("dark", document.body.classList.contains("dark")); }
+if(localStorage.getItem("dark")==="true"){ document.body.classList.add("dark"); }
+function toggleMenu(){ document.getElementById('sidebar').classList.toggle('open'); }
+</script>
 </body>
 </html>
