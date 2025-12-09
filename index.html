@@ -5,22 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Math + Notes Site</title>
 
-  <!-- Open Sans font -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- MathJax -->
   <script>
-    MathJax = {
-      tex: {
-        inlineMath: [["$", "$"], ["\\(", "\\)"]]
-      }
-    };
+    MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] } };
   </script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
-    /* Base layout */
     body {
       margin: 0;
       font-family: "Open Sans", sans-serif;
@@ -46,7 +38,6 @@
       --code-bg: #222;
     }
 
-    /* Sidebar */
     nav {
       width: 220px;
       background: var(--sidebar-bg);
@@ -57,40 +48,24 @@
       border-right: 1px solid rgba(0,0,0,0.1);
     }
 
-    nav h2 {
-      font-size: 1.2em;
-      margin-top: 0;
-    }
-
+    nav h2 { margin-top: 0; font-size: 1.2em; }
     nav a {
       display: block;
       padding: 6px 0;
-      text-decoration: none;
       color: var(--text);
+      text-decoration: none;
       font-weight: 600;
     }
 
-    /* Main content */
     main {
       margin-left: 240px;
       padding: 40px;
       max-width: 800px;
     }
 
-    h1, h2, h3 {
-      margin-top: 30px;
-      font-weight: 700;
-    }
+    h1, h2, h3 { margin-top: 30px; font-weight: 700; }
+    p { line-height: 1.6; }
 
-    p {
-      line-height: 1.6;
-    }
-
-    a {
-      color: var(--link);
-    }
-
-    /* Markdown-style code blocks */
     pre {
       background: var(--code-bg);
       padding: 12px;
@@ -98,11 +73,6 @@
       overflow-x: auto;
     }
 
-    code {
-      font-family: monospace;
-    }
-
-    /* Toggle button */
     .toggle {
       position: absolute;
       right: 10px;
@@ -114,41 +84,84 @@
       user-select: none;
       font-size: 0.9em;
     }
+
+    /* MOBILE RESPONSIVE DESIGN */
+    @media (max-width: 800px) {
+      body {
+        flex-direction: column;
+      }
+
+      nav {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+      }
+
+      main {
+        margin-left: 0;
+        padding: 20px;
+      }
+
+      .toggle {
+        top: 15px;
+        right: 15px;
+      }
+    }
+
+    /* Collapsible menu for very small screens */
+    @media (max-width: 500px) {
+      nav {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        padding: 8px 12px;
+        background: var(--code-bg);
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      nav.open {
+        display: block;
+        background: var(--sidebar-bg);
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <!-- Sidebar -->
-  <nav>
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+  <nav id="sidebar">
     <h2>Contents</h2>
     <a href="#intro">Introduction</a>
     <a href="#math">Math Examples</a>
     <a href="#markdown">Markdown Examples</a>
   </nav>
 
-  <!-- Dark mode toggle -->
   <div class="toggle" onclick="toggleDark()">🌙 / ☀️</div>
 
-  <!-- Main Content -->
   <main>
     <h1 id="intro">My Math & Notes Page</h1>
-    <p>
-      This is a clean one-page site with a sidebar, dark mode, MathJax, and
-      Markdown-style formatting.
-    </p>
+    <p>This is a clean one-page site with a sidebar, dark mode, MathJax, and Markdown-style formatting.</p>
 
     <h2 id="math">Math Examples</h2>
     <p>Inline math: $a^2 + b^2 = c^2$.</p>
-
     <p>Display math:</p>
-    $$ \int_0^\infty e^{-x^2}\, dx = \frac{\sqrt{\pi}}{2} $$
+    $$ \int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2} $$
 
     <h2 id="markdown">Markdown-Style Examples</h2>
 
     <h3>Code Block</h3>
     <pre><code>def hello():
-    print("Hello, world!")
-</code></pre>
+    print("Hello, world!")</code></pre>
 
     <h3>List</h3>
     <ul>
@@ -161,15 +174,18 @@
   </main>
 
   <script>
-    // Dark mode toggle
     function toggleDark() {
       document.body.classList.toggle("dark");
       localStorage.setItem("dark", document.body.classList.contains("dark"));
     }
 
-    // Remember preference
     if (localStorage.getItem("dark") === "true") {
       document.body.classList.add("dark");
+    }
+
+    function toggleMenu() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
     }
   </script>
 </body>
